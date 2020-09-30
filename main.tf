@@ -57,19 +57,6 @@ resource "aws_route_table_association" "routetableassociation_public" {
 }
 
 ######################################## END RESEAU ########################################
-######################################## RSA KEY ########################################
-
-#Create clé RSA 4096
-resource "tls_private_key" "key_terraform" {
-  algorithm   = "RSA"
-  rsa_bits = "4096"
-}
-resource "aws_key_pair" "aws_tsunamirr_terraform" {
-  key_name   = "aws_tsunamirr_terraform"
-  public_key = tls_private_key.key_terraform.public_key_openssh
-}
-
-######################################## END RSA KEY ########################################
 ######################################## INSTANCE ########################################
 
 #Create EC2
@@ -93,7 +80,6 @@ resource "aws_instance" "instance_stresstest_1" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  key_name   = aws_key_pair.aws_tsunamirr_terraform.id
   associate_public_ip_address = true
   user_data = file("${path.module}/post_install_siege.sh")
   vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
@@ -106,7 +92,6 @@ resource "aws_instance" "instance_stresstest_2" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  key_name   = aws_key_pair.aws_tsunamirr_terraform.id
   associate_public_ip_address = true
   user_data = file("${path.module}/post_install_siege.sh")
   vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
@@ -119,7 +104,6 @@ resource "aws_instance" "instance_stresstest_3" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  key_name   = aws_key_pair.aws_tsunamirr_terraform.id
   associate_public_ip_address = true
   user_data = file("${path.module}/post_install_siege.sh")
   vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
@@ -132,7 +116,6 @@ resource "aws_instance" "instance_stresstest_4" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  key_name   = aws_key_pair.aws_tsunamirr_terraform.id
   associate_public_ip_address = true
   user_data = file("${path.module}/post_install_siege.sh")
   vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
@@ -145,7 +128,6 @@ resource "aws_instance" "instance_stresstest_5" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  key_name   = aws_key_pair.aws_tsunamirr_terraform.id
   associate_public_ip_address = true
   user_data = file("${path.module}/post_install_siege.sh")
   vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
@@ -158,7 +140,6 @@ resource "aws_instance" "instance_stresstest_6" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  key_name   = aws_key_pair.aws_tsunamirr_terraform.id
   associate_public_ip_address = true
   user_data = file("${path.module}/post_install_siege.sh")
   vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
@@ -171,7 +152,6 @@ resource "aws_instance" "instance_stresstest_7" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  key_name   = aws_key_pair.aws_tsunamirr_terraform.id
   associate_public_ip_address = true
   user_data = file("${path.module}/post_install_siege.sh")
   vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
@@ -184,7 +164,6 @@ resource "aws_instance" "instance_stresstest_8" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  key_name   = aws_key_pair.aws_tsunamirr_terraform.id
   associate_public_ip_address = true
   user_data = file("${path.module}/post_install_siege.sh")
   vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
@@ -197,7 +176,6 @@ resource "aws_instance" "instance_stresstest_9" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  key_name   = aws_key_pair.aws_tsunamirr_terraform.id
   associate_public_ip_address = true
   user_data = file("${path.module}/post_install_siege.sh")
   vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
@@ -210,7 +188,6 @@ resource "aws_instance" "instance_stresstest_10" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  key_name   = aws_key_pair.aws_tsunamirr_terraform.id
   associate_public_ip_address = true
   user_data = file("${path.module}/post_install_siege.sh")
   vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
@@ -220,31 +197,3 @@ resource "aws_instance" "instance_stresstest_10" {
   }
 }
 ######################################## END INSTANCE ########################################
-######################################## SECURITY GROUP ########################################
-
-resource "aws_security_group" "allow_ssh_any" {
-  name        = "allow_ssh_from_any"
-  description = "Allow ssh inbound traffic"
-  vpc_id      = aws_vpc.vpc_terraform.id
-
-  ingress {
-    description = "SSH"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "allow_ssh_any"
-  }
-}
-
-######################################## END SECURITY GROUP ########################################
