@@ -76,7 +76,8 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-resource "aws_instance" "instance_stresstest_1" {
+resource "aws_instance" "instance_stresstest" {
+  count = 5
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
@@ -85,115 +86,8 @@ resource "aws_instance" "instance_stresstest_1" {
   vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
 
   tags = {
-    Name = "instance_stresstest_1"
+    Name = "instance_stresstest"
   }
 }
-resource "aws_instance" "instance_stresstest_2" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  associate_public_ip_address = true
-  user_data = file("${path.module}/post_install_siege.sh")
-  vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
 
-  tags = {
-    Name = "instance_stresstest_2"
-  }
-}
-resource "aws_instance" "instance_stresstest_3" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  associate_public_ip_address = true
-  user_data = file("${path.module}/post_install_siege.sh")
-  vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
-
-  tags = {
-    Name = "instance_stresstest_3"
-  }
-}
-resource "aws_instance" "instance_stresstest_4" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  associate_public_ip_address = true
-  user_data = file("${path.module}/post_install_siege.sh")
-  vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
-
-  tags = {
-    Name = "instance_stresstest_4"
-  }
-}
-resource "aws_instance" "instance_stresstest_5" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  associate_public_ip_address = true
-  user_data = file("${path.module}/post_install_siege.sh")
-  vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
-
-  tags = {
-    Name = "instance_stresstest_5"
-  }
-}
-resource "aws_instance" "instance_stresstest_6" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  associate_public_ip_address = true
-  user_data = file("${path.module}/post_install_siege.sh")
-  vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
-
-  tags = {
-    Name = "instance_stresstest_6"
-  }
-}
-resource "aws_instance" "instance_stresstest_7" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  associate_public_ip_address = true
-  user_data = file("${path.module}/post_install_siege.sh")
-  vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
-
-  tags = {
-    Name = "instance_stresstest_7"
-  }
-}
-resource "aws_instance" "instance_stresstest_8" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  associate_public_ip_address = true
-  user_data = file("${path.module}/post_install_siege.sh")
-  vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
-
-  tags = {
-    Name = "instance_stresstest_8"
-  }
-}
-resource "aws_instance" "instance_stresstest_9" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  associate_public_ip_address = true
-  user_data = file("${path.module}/post_install_siege.sh")
-  vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
-
-  tags = {
-    Name = "instance_stresstest_9"
-  }
-}
-resource "aws_instance" "instance_stresstest_10" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  subnet_id = aws_subnet.subnet_public_stresstest_terraform.id
-  associate_public_ip_address = true
-  user_data = file("${path.module}/post_install_siege.sh")
-  vpc_security_group_ids =  [aws_security_group.allow_ssh_any.id]
-
-  tags = {
-    Name = "instance_stresstest_10"
-  }
-}
 ######################################## END INSTANCE ########################################
